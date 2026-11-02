@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Form Input Data Kecamatan</h2>
+<form action="input.php" onsubmit="return validateForm(event)" method="post">
+ <label for="kecamatan">Kecamatan:</label><br>
+ <input type="text" id="kec" name="kecamatan" value=""><br>
+ 
+ <label for="longitude">Longitude:</label><br>
+ <input type="text" id="long" name="longitude" value=""><br>
+ 
+ <label for="latitude">Latitude:</label><br>
+ <input type="text" id="lat" name="latitude" value=""><br>
+ 
+ <label for="luas">Luas:</label><br>
+ <input type="text" id="luas" name="luas" value=""><br>
+ 
+ <label for="jumlah_penduduk">Jumlah Penduduk:</label><br>
+ <input type="text" id="jml_ppdk" name="jumlah_penduduk" value=""><br><br>
+ 
+ <input type="submit" value="Submit">
+</form>
+
+<p id="informasi" style="color:red;"></p>
+
+<script>
+function validateForm(event) {
+ let kec = document.getElementById("kec").value.trim();
+ let luas = document.getElementById("luas").value;
+ let jml_ppdk = document.getElementById("jml_ppdk").value;
+ let text = "";
+
+ // Validasi Kecamatan (tidak boleh kosong)
+ if (kec === "") {
+    text = "Nama kecamatan tidak boleh kosong!";
+    event.preventDefault();
+ }
+ // Validasi Luas (harus angka & > 0)
+ else if (isNaN(luas) || luas <= 0 || luas === "") {
+    text = "Data luas harus berupa angka dan tidak boleh bernilai negatif atau nol!";
+    event.preventDefault();
+ }
+ // Validasi Jumlah Penduduk (harus angka bulat & >= 0)
+ else if (isNaN(jml_ppdk) || jml_ppdk < 0 || jml_ppdk === "") {
+    text = "Jumlah penduduk harus berupa angka dan tidak boleh bernilai negatif!";
+    event.preventDefault();
+ }
+
+ document.getElementById("informasi").innerHTML = text;
+}
+</script>
+</body>
+</html>
