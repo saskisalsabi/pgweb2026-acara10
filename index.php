@@ -1,45 +1,50 @@
 <?php
-// Sesuaikan dengan setting MySQL XAMPP
 $servername = "localhost";
 $username   = "root";
-$password   = ""; // Default XAMPP kosong
-$dbname     = "kecamtan";
+$password   = ""; 
+$dbname     = "bedahbukudiy";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername,$username, $password,$dbname);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Ambil data dari tabel kecamatan_jogja
-$sql = "SELECT * FROM kecamatan_jogja";
+$sql = "SELECT * FROM bedah_buku";
 $result = $conn->query($sql);
 
-if ($result && $result->num_rows > 0) {
-    echo "<table border=1px' cellpadding='8' cellspacing='0'>
+echo "<h2>Data Titik Bedah Buku DIY</h2>";
+echo "<p><a href='input/index.html'>+ Tambah Data Baru</a></p>";
+
+if ($result &&$result->num_rows > 0) {
+    echo "<table border='1px' cellpadding='8' cellspacing='0'>
     <tr>
-        <th>Kecamatan</th>
-        <th>Longitude</th>
+        <th>Nama Objek</th>
+        <th>Lokasi</th>
         <th>Latitude</th>
-        <th>Luas</th>
-        <th>Jumlah Penduduk</th>
+        <th>Longitude</th>
+        <th>Judul Buku</th>
+        <th>Penerbit</th>
+        <th>Narasumber</th>
+        <th colspan='2'>Aksi</th>
     </tr>";
 
-    // Output data per baris
-    while($row = $result->fetch_assoc()) {
+    while($row =$result->fetch_assoc()) {
         echo "<tr>
-            <td>".$row["nama_kecamatan"]."</td>
-            <td>".$row["longtitude"]."</td>
+            <td>".$row["nama_objek"]."</td>
+            <td>".$row["lokasi"]."</td>
             <td>".$row["latitude"]."</td>
-            <td>".$row["luas"]."</td>
-            <td align='right'>".number_format($row["jumlah_penduduk"])."</td>
+            <td>".$row["longitude"]."</td>
+            <td>".$row["judul_buku"]."</td>
+            <td>".$row["penerbit"]."</td>
+            <td>".$row["narasumber"]."</td>
+            <td><a href='delete.php?id=".$row["id"]."' onclick=\"return confirm('Yakin ingin menghapus data ini?')\">Hapus</a></td>
+            <td><a href='edit/index.php?id=".$row["id"]."'>Edit</a></td>
         </tr>";
     }
     echo "</table>";
 } else {
-    echo "0 results";
+    echo "Belum ada data titik bedah buku.";
 }
 
 $conn->close();
