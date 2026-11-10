@@ -13,10 +13,11 @@ if ($conn->connect_error) {
 $sql = "SELECT * FROM bedah_buku";
 $result = $conn->query($sql);
 
-// Link Input sederhana di bagian atas seperti contoh modul
+// Link Input sederhana di bagian atas
 echo "<a href='input/index.html'>Input</a><br><br>";
 
 if ($result && $result->num_rows > 0) {
+    // Tanda titik koma di dalam string HTML sudah dihapus
     echo "<table border='1' cellpadding='5' cellspacing='0'>
     <tr>
         <th>Nama Objek</th>

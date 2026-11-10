@@ -1,25 +1,25 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id          = $_POST['id'];
-    $nama_objek  = $_POST['nama_objek'];
-    $lokasi      = $_POST['lokasi'];
-    $latitude    = $_POST['latitude'];
-    $longitude   = $_POST['longitude'];
-    $judul_buku  = $_POST['judul_buku'];
-    $penerbit    = $_POST['penerbit'];
-    $narasumber  = $_POST['narasumber'];
-
     $conn = new mysqli("localhost", "root", "", "bedahbukudiy");
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
+    $id          = $_POST['id'];
+    $nama_objek  = $conn->real_escape_string($_POST['nama_objek']);
+    $lokasi      = $conn->real_escape_string($_POST['lokasi']);
+    $latitude    = is_numeric($_POST['latitude']) ? $_POST['latitude'] : 0;
+    $longitude   = is_numeric($_POST['longitude']) ? $_POST['longitude'] : 0;
+    $judul_buku  = $conn->real_escape_string($_POST['judul_buku']);
+    $penerbit    = $conn->real_escape_string($_POST['penerbit']);
+    $narasumber  = $conn->real_escape_string($_POST['narasumber']);
+
     $sql = "UPDATE bedah_buku SET 
             nama_objek='$nama_objek', 
             lokasi='$lokasi', 
-            latitude=$latitude, 
-            longitude=$longitude, 
+            latitude='$latitude', 
+            longitude='$longitude', 
             judul_buku='$judul_buku', 
             penerbit='$penerbit', 
             narasumber='$narasumber' 
